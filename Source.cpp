@@ -20,15 +20,26 @@ class saraksts {
 	dalibnieks* pirmais;
 	dalibnieks* pedejais;
 public:
+		dalibnieks* vecakaID(dalibnieks* dal) {
+		dalibnieks* tmp = pirmais;
+		while (tmp != NULL) {
+			if (tmp->siev == dal->id) return vecakaID(tmp);
+			if (tmp->vir == dal->id) return vecakaID(tmp);
+			tmp = tmp->next;
+		}
+		return dal;
+	}
+
 	saraksts() {
 		pirmais = pedejais=NULL;
-
-
 	}
+	//dalibnieks* getPirmais() {
+	//	return pirmais;
+	//}
 	dalibnieks* getPirmais() {
-
-		return pirmais;
+		return vecakaID(pirmais);
 	}
+
 	void add_dalib(dalibnieks* dal) {
 
 		if (!pirmais) {
@@ -61,8 +72,6 @@ struct mezgls {
 	int id;
 	mezgls* siev;
 	mezgls* vir;
-
-
 };
 mezgls* izveidot(saraksts sar, int _id) {
 	dalibnieks* d = sar.atrast(_id);
@@ -137,7 +146,9 @@ int main() {
 	f.close();
 	//izvaditLimeni(m, 2);
 	ofstream f2("team.out");
-	int n = kokaDzilums(m)-1;
+	//int n = kokaDzilums(m)-1;
+	int n = kokaDzilums(m);
+	if (n != 0) n--;
 	for (int i = n;i >= 0; i--) {
 		f2 << i << ": ";
 		izvaditLimeni(m, i, f2);
